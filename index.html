@@ -80,6 +80,58 @@
       }
     ]
   }
+
+
+    const lightbox = document.querySelector('#lightbox');
+    const lightboxImage = lightbox?.querySelector('.lightbox-image');
+    const lightboxClose = lightbox?.querySelector('.lightbox-close');
+    let lastLightboxTrigger = null;
+
+    const closeLightbox = () => {
+      if (!lightbox || !lightboxImage) return;
+
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
+      document.body.classList.remove('lightbox-open');
+      lastLightboxTrigger?.focus();
+    };
+
+    document.querySelectorAll('.gallery-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        if (!lightbox || !lightboxImage) return;
+
+        const preview = trigger.querySelector('img');
+        const imageUrl = trigger.dataset.image;
+
+        if (!imageUrl) return;
+
+        lastLightboxTrigger = trigger;
+        lightboxImage.src = imageUrl;
+        lightboxImage.alt = preview?.alt || 'Enlarged OpenBackup screenshot';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+        lightboxClose?.focus();
+      });
+    });
+
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxImage?.addEventListener('click', closeLightbox);
+
+    lightbox?.addEventListener('click', event => {
+      if (event.target === lightbox || event.target.classList.contains('lightbox-content')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && lightbox?.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+
   </script>
 
   <style>
@@ -556,6 +608,18 @@
       transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .35s ease;
     }
 
+
+    .gallery-trigger {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: inherit;
+      cursor: zoom-in;
+    }
+
     .gallery figure:hover img {
       transform: scale(1.025);
       filter: saturate(1.08);
@@ -674,6 +738,72 @@
     .reveal.visible {
       opacity: 1;
       transform: none;
+    }
+
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(2, 4, 12, .92);
+      backdrop-filter: blur(12px);
+    }
+
+    .lightbox.open {
+      display: grid;
+    }
+
+    .lightbox-content {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(94vw, 1400px);
+      height: min(92vh, 1000px);
+    }
+
+    .lightbox-image {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 18px;
+      box-shadow: 0 28px 100px rgba(0, 0, 0, .65);
+      cursor: zoom-out;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 22px;
+      z-index: 1001;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 50%;
+      background: rgba(10, 14, 30, .88);
+      color: #fff;
+      font: inherit;
+      font-size: 1.9rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus-visible {
+      transform: scale(1.06);
+      background: rgba(31, 39, 75, .96);
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
     }
 
     @media (max-width: 900px) {
@@ -957,51 +1087,51 @@
 
         <div class="gallery">
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_02_Multiple_Backup_Jobs_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_02_Multiple_Backup_Jobs_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_02_Multiple_Backup_Jobs_v1.png" alt="OpenBackup monitoring multiple SuperDuper! backup jobs" loading="lazy">
-            </a>
+            </button>
             <figcaption>Monitor multiple backup jobs.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_03_Multiple_Backup_Jobs_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_03_Multiple_Backup_Jobs_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_03_Multiple_Backup_Jobs_v1.png" alt="OpenBackup connection options for Google Drive, Dropbox and HTTPS server" loading="lazy">
-            </a>
+            </button>
             <figcaption>Choose the connection that fits your setup.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_04_Multiple_Backup_Jobs_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_04_Multiple_Backup_Jobs_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_04_Multiple_Backup_Jobs_v1.png" alt="OpenBackup dashboard with successful, running and failed backup statuses" loading="lazy">
-            </a>
+            </button>
             <figcaption>See backup status instantly.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_05_Multiple_Backup_Jobs_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_05_Multiple_Backup_Jobs_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_05_Multiple_Backup_Jobs_v1.png" alt="OpenBackup smart backup failure and storage notifications" loading="lazy">
-            </a>
+            </button>
             <figcaption>Get notified when attention is needed.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_06_Multiple_Backup_Jobs_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_06_Multiple_Backup_Jobs_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_06_Multiple_Backup_Jobs_v1.png" alt="OpenBackup Pro features and one-time purchase" loading="lazy">
-            </a>
+            </button>
             <figcaption>Unlock advanced features with OpenBackup Pro.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_07_Customize_Your_Experience_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_07_Customize_Your_Experience_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_07_Customize_Your_Experience_v1.png" alt="OpenBackup settings with refresh intervals and connection preferences" loading="lazy">
-            </a>
+            </button>
             <figcaption>Customize refresh and connection settings.</figcaption>
           </figure>
 
           <figure class="reveal">
-            <a href="https://openbackup.app/assets/images/OpenBackup_Screenshot_08_Customize_Your_Experience_v1.png">
+            <button class="gallery-trigger" type="button" data-image="https://openbackup.app/assets/images/OpenBackup_Screenshot_08_Customize_Your_Experience_v1.png" aria-label="Open enlarged screenshot">
               <img src="https://openbackup.app/assets/images/OpenBackup_Screenshot_08_Customize_Your_Experience_v1.png" alt="OpenBackup app overview with all backups protected" loading="lazy">
-            </a>
+            </button>
             <figcaption>Stay informed wherever you are.</figcaption>
           </figure>
         </div>
@@ -1106,5 +1236,13 @@
     document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
     document.querySelector('#year').textContent = new Date().getFullYear();
   </script>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close enlarged screenshot">×</button>
+    <div class="lightbox-content">
+      <img class="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
 </body>
 </html>
