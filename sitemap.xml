@@ -1,1 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <url>
+    <loc>https://openbackup.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://openbackup.app/privacy.html</loc>
+  </url>
+
+  <url>
+    <loc>https://openbackup.app/setup.html</loc>
+  </url>
+
+  <url>
+    <loc>https://openbackup.app/mac.html</loc>
+  </url>
+
+  <url>
+    <loc>https://openbackup.app/superduper.html</loc>
+  </url>
+
+</urlset>
