@@ -27,7 +27,10 @@
   <meta name="twitter:description" content="Monitor your Mac backups from Android.">
   <meta name="twitter:image" content="https://openbackup.app/assets/images/OpenBackup_Screenshot_01_Reliable_Backup_Monitoring_v1.png">
 
-  <link rel="icon" href="https://openbackup.app/assets/images/OpenBackup_Screenshot_08_Customize_Your_Experience_v1.png">
+  <link
+  rel="icon"
+  type="image/png"
+  href="/assets/images/OpenBackup-logo-transparant.png">
   <link rel="preload" as="image" href="https://openbackup.app/assets/images/OpenBackup_Screenshot_01_Reliable_Backup_Monitoring_v1.png">
 
   <script type="application/ld+json">
@@ -203,17 +206,14 @@
       font-size: 1.18rem;
     }
 
-    .brand-mark {
-      width: 38px;
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--blue), var(--violet) 58%, var(--magenta));
-      box-shadow: 0 0 28px rgba(81, 91, 255, .45);
-      color: white;
-      font-size: .88rem;
-    }
+    .brand-logo {
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(129, 86, 255, .35));
+}
 
     .brand span span {
       background: linear-gradient(90deg, var(--blue), var(--magenta));
@@ -1000,7 +1000,13 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="OpenBackup home">
-        <span class="brand-mark" aria-hidden="true">OB</span>
+        <img
+  class="brand-logo"
+  src="/assets/images/OpenBackup-logo-transparant.png"
+  alt=""
+  width="42"
+  height="42"
+  aria-hidden="true">
         <span>Open<span>Backup</span></span>
       </a>
 
