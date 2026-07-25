@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- OpenBackup index v5 - lightbox fixed -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -80,57 +81,6 @@
       }
     ]
   }
-
-
-    const lightbox = document.querySelector('#lightbox');
-    const lightboxImage = lightbox?.querySelector('.lightbox-image');
-    const lightboxClose = lightbox?.querySelector('.lightbox-close');
-    let lastLightboxTrigger = null;
-
-    const closeLightbox = () => {
-      if (!lightbox || !lightboxImage) return;
-
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      lightboxImage.src = '';
-      lightboxImage.alt = '';
-      document.body.classList.remove('lightbox-open');
-      lastLightboxTrigger?.focus();
-    };
-
-    document.querySelectorAll('.gallery-trigger').forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        if (!lightbox || !lightboxImage) return;
-
-        const preview = trigger.querySelector('img');
-        const imageUrl = trigger.dataset.image;
-
-        if (!imageUrl) return;
-
-        lastLightboxTrigger = trigger;
-        lightboxImage.src = imageUrl;
-        lightboxImage.alt = preview?.alt || 'Enlarged OpenBackup screenshot';
-        lightbox.classList.add('open');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('lightbox-open');
-        lightboxClose?.focus();
-      });
-    });
-
-    lightboxClose?.addEventListener('click', closeLightbox);
-    lightboxImage?.addEventListener('click', closeLightbox);
-
-    lightbox?.addEventListener('click', event => {
-      if (event.target === lightbox || event.target.classList.contains('lightbox-content')) {
-        closeLightbox();
-      }
-    });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && lightbox?.classList.contains('open')) {
-        closeLightbox();
-      }
-    });
 
   </script>
 
@@ -1208,6 +1158,13 @@
     </div>
   </footer>
 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close enlarged screenshot">×</button>
+    <div class="lightbox-content">
+      <img class="lightbox-image" src="" alt="">
+    </div>
+  </div>
+
   <script>
     const menuButton = document.querySelector('.menu-button');
     const menu = document.querySelector('#main-menu');
@@ -1235,14 +1192,56 @@
 
     document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
     document.querySelector('#year').textContent = new Date().getFullYear();
+
+    const lightbox = document.querySelector('#lightbox');
+    const lightboxImage = lightbox?.querySelector('.lightbox-image');
+    const lightboxClose = lightbox?.querySelector('.lightbox-close');
+    let lastLightboxTrigger = null;
+
+    const closeLightbox = () => {
+      if (!lightbox || !lightboxImage) return;
+
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
+      document.body.classList.remove('lightbox-open');
+      lastLightboxTrigger?.focus();
+    };
+
+    document.querySelectorAll('.gallery-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        if (!lightbox || !lightboxImage) return;
+
+        const preview = trigger.querySelector('img');
+        const imageUrl = trigger.dataset.image;
+
+        if (!imageUrl) return;
+
+        lastLightboxTrigger = trigger;
+        lightboxImage.src = imageUrl;
+        lightboxImage.alt = preview?.alt || 'Enlarged OpenBackup screenshot';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+        lightboxClose?.focus();
+      });
+    });
+
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxImage?.addEventListener('click', closeLightbox);
+
+    lightbox?.addEventListener('click', event => {
+      if (event.target === lightbox || event.target.classList.contains('lightbox-content')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && lightbox?.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
   </script>
-
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot" aria-hidden="true">
-    <button class="lightbox-close" type="button" aria-label="Close enlarged screenshot">×</button>
-    <div class="lightbox-content">
-      <img class="lightbox-image" src="" alt="">
-    </div>
-  </div>
-
 </body>
 </html>
