@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b18">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="Mark Toby">
+  <meta name="application-name" content="OpenBackup">
+
+  <title>Privacy Policy | OpenBackup</title>
+  <meta name="description" content="Read the OpenBackup privacy policy and learn how the Android backup monitoring app processes backup status information without collecting personal data.">
+  <link rel="canonical" href="https://openbackup.app/privacy.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenBackup">
+  <meta property="og:title" content="Privacy Policy | OpenBackup">
+  <meta property="og:description" content="How OpenBackup processes backup status information while keeping personal data under your control.">
+  <meta property="og:url" content="https://openbackup.app/privacy.html">
+  <meta property="og:image" content="https://openbackup.app/assets/images/OpenBackup_Screenshot_01_Reliable_Backup_Monitoring_v1.png">
+  <meta property="og:image:alt" content="OpenBackup backup monitoring app for SuperDuper! on macOS">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy | OpenBackup">
+  <meta name="twitter:description" content="How OpenBackup protects your privacy while monitoring backup status.">
+  <meta name="twitter:image" content="https://openbackup.app/assets/images/OpenBackup_Screenshot_01_Reliable_Backup_Monitoring_v1.png">
+
+  <link rel="icon" type="image/png" href="/assets/images/OpenBackup-logo-transparant.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://openbackup.app/privacy.html#webpage",
+    "url": "https://openbackup.app/privacy.html",
+    "name": "Privacy Policy | OpenBackup",
+    "description": "Privacy policy for the OpenBackup Android backup monitoring application.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "@id": "https://openbackup.app/#website",
+      "url": "https://openbackup.app/",
+      "name": "OpenBackup"
+    },
+    "inLanguage": "en",
+    "dateModified": "2026-07-22"
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #050711;
+      --bg-soft: #090d1d;
+      --card: rgba(15, 21, 45, .78);
+      --line: rgba(145, 169, 255, .16);
+      --text: #f7f8ff;
+      --muted: #abb4cf;
+      --blue: #08a8ff;
+      --blue-2: #145fff;
+      --violet: #8156ff;
+      --magenta: #d33dff;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .42);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(20, 95, 255, .18), transparent 32rem),
+        radial-gradient(circle at 90% 15%, rgba(211, 61, 255, .15), transparent 34rem),
+        linear-gradient(180deg, #050711 0%, #070b18 48%, #050711 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .11;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, #000, transparent 80%);
+      z-index: -1;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(calc(100% - 36px), var(--max));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 999;
+      transform: translateY(-160%);
+      padding: .75rem 1rem;
+      border-radius: 10px;
+      background: #fff;
+      color: #000;
+    }
+
+    .skip-link:focus { transform: none; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(5, 7, 17, .72);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .brand-logo {
+      display: block;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 16px rgba(129, 86, 255, .35));
+    }
+
+    .brand span span {
+      background: linear-gradient(90deg, var(--blue), var(--magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .95rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links a[aria-current="page"] {
+      color: #fff;
+    }
+
+    .page {
+      width: min(calc(100% - 36px), 920px);
+      margin: 0 auto;
+      padding: 52px 0 76px;
+    }
+
+    .page-header {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #8edbff;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 4.7rem);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--blue), var(--violet), var(--magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .updated {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-top: 20px;
+      padding: .66rem .92rem;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(255,255,255,.055);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 750;
+    }
+
+    .home-link:hover,
+    .home-link:focus-visible {
+      border-color: rgba(255,255,255,.34);
+      transform: translateY(-1px);
+    }
+
+    .card {
+      padding: clamp(24px, 5vw, 48px);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(8, 168, 255, .05), rgba(129, 86, 255, .06) 52%, rgba(211, 61, 255, .045)),
+        var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    section + section {
+      margin-top: 34px;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 1.35rem;
+      letter-spacing: -.02em;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #dce4ef;
+    }
+
+    ul {
+      margin: 12px 0 16px;
+      padding-left: 24px;
+      color: #dce4ef;
+    }
+
+    li + li { margin-top: 7px; }
+    strong { color: #fff; }
+    code { color: #b9e9ff; }
+
+    .card a {
+      color: #8edbff;
+      text-decoration-thickness: .08em;
+      text-underline-offset: .18em;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-left: 3px solid var(--magenta);
+      border-radius: 4px 14px 14px 4px;
+      background: rgba(211, 61, 255, .075);
+      color: #e8ecfa;
+    }
+
+    footer {
+      padding: 30px 0 42px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus-visible { color: #fff; }
+
+    @media (max-width: 700px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .page {
+        width: min(100% - 24px, 920px);
+        padding-top: 36px;
+      }
+
+      .card { border-radius: 20px; }
+      .footer-grid { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="OpenBackup home">
+        <img
+          class="brand-logo"
+          src="/assets/images/OpenBackup-logo-transparant.png"
+          alt=""
+          width="42"
+          height="42"
+          aria-hidden="true">
+        <span>Open<span>Backup</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/#installation">Installation</a>
+        <a href="/#free-pro">Free &amp; Pro</a>
+        <a href="/privacy.html" aria-current="page">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page" id="main">
+
+    <header class="page-header">
+      <p class="eyebrow">Your data stays under your control</p>
+      <h1>Privacy <span class="gradient-text">Policy</span></h1>
+
+      <p class="subtitle">
+        Privacy Policy for the OpenBackup Android backup monitoring application.
+      </p>
+
+      <p class="updated">
+        Last updated: July 22, 2026
+      </p>
+
+      <a class="home-link" href="/" aria-label="Return to the OpenBackup homepage">
+        <span aria-hidden="true">←</span>
+        Back to OpenBackup
+      </a>
+    </header>
+
+    <article class="card">
+
+      <section>
+        <h2>1. Introduction</h2>
+
+        <p>
+          OpenBackup respects your privacy.
+        </p>
+
+        <p>
+          OpenBackup is an Android application designed to monitor the status
+          of backups created by third-party backup software, including
+          SuperDuper! on macOS.
+        </p>
+
+        <p>
+          <strong>OpenBackup is not a backup application.</strong>
+          It does not create, copy, modify, restore, manage or store backups.
+          The app only reads and displays backup status information from a
+          location selected by the user.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Information processed by OpenBackup</h2>
+
+        <p>
+          OpenBackup reads a backup status file, such as
+          <code>backup_status.json</code>, from a location configured by the
+          user.
+        </p>
+
+        <p>Supported locations may include:</p>
+
+        <ul>
+          <li>Google Drive</li>
+          <li>Dropbox</li>
+          <li>A user-provided HTTP or HTTPS server</li>
+        </ul>
+
+        <p>
+          The app only processes the information necessary to display backup
+          monitoring details, such as backup status, completion time, source,
+          destination and available storage information.
+        </p>
+
+        <p>
+          OpenBackup does not upload, modify or delete files stored in these
+          locations.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Personal information</h2>
+
+        <p>
+          OpenBackup does not collect, store or transmit personal information
+          to the developer.
+        </p>
+
+        <p>The app does not collect information such as:</p>
+
+        <ul>
+          <li>Name</li>
+          <li>Email address</li>
+          <li>Phone number</li>
+          <li>Contacts</li>
+          <li>Messages</li>
+          <li>Photos or videos</li>
+          <li>Precise location</li>
+          <li>Payment card or banking information</li>
+        </ul>
+
+        <p>
+          OpenBackup does not require users to create an OpenBackup account.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Data collection and storage</h2>
+
+        <p>
+          OpenBackup does not operate a cloud service or server that receives
+          or stores users' backup status information.
+        </p>
+
+        <p>
+          Backup status information is retrieved directly from the location
+          configured by the user and is displayed on the user's device.
+        </p>
+
+        <p>
+          Settings required for the app to function, such as a selected
+          connection type, status-file URL and refresh interval, may be stored
+          locally on the user's Android device.
+        </p>
+
+        <p>
+          OpenBackup does not sell personal information or backup information.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Third-party services</h2>
+
+        <p>
+          Depending on the user's configuration, OpenBackup may connect to
+          third-party services such as Google Drive or Dropbox, or to a server
+          operated by the user.
+        </p>
+
+        <p>
+          These services are controlled by their respective providers and are
+          subject to their own privacy policies, terms and security practices.
+        </p>
+
+        <p>
+          OpenBackup does not control the availability, security or data
+          processing practices of third-party services.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. OpenBackup Pro and payments</h2>
+
+        <p>
+          OpenBackup may offer optional paid functionality through Google Play.
+        </p>
+
+        <p>
+          Purchases are processed by Google Play. The developer of OpenBackup
+          does not receive or store users' full payment card or banking
+          information.
+        </p>
+
+        <p>
+          Google may process purchase and transaction information according to
+          Google's own privacy policy and terms.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Advertising, analytics and tracking</h2>
+
+        <p>
+          OpenBackup does not display third-party advertisements.
+        </p>
+
+        <p>
+          OpenBackup does not use third-party analytics, advertising
+          identifiers or cross-app tracking technologies.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Backup responsibility</h2>
+
+        <p>
+          OpenBackup is a monitoring tool only. It is not responsible for
+          creating or maintaining backups.
+        </p>
+
+        <p>The developer of OpenBackup is not responsible for:</p>
+
+        <ul>
+          <li>The success or failure of backup software</li>
+          <li>Missing, incomplete, corrupted or outdated backups</li>
+          <li>Data loss</li>
+          <li>Storage-device failures</li>
+          <li>Cloud-service outages</li>
+          <li>Incorrect or unavailable status information</li>
+          <li>Failures of third-party software or services</li>
+        </ul>
+
+        <div class="notice">
+          Users remain responsible for configuring, testing, verifying and
+          maintaining their own backup systems and for confirming that their
+          backups can be restored successfully.
+        </div>
+      </section>
+
+      <section>
+        <h2>9. Security</h2>
+
+        <p>
+          OpenBackup is designed to access only the backup status information
+          required to provide its monitoring functionality.
+        </p>
+
+        <p>Users remain responsible for securing:</p>
+
+        <ul>
+          <li>Their Android device</li>
+          <li>Their cloud-storage accounts</li>
+          <li>Their own HTTP or HTTPS servers</li>
+          <li>Their backup software</li>
+          <li>The URLs and files configured in OpenBackup</li>
+        </ul>
+
+        <p>
+          Users should use HTTPS whenever they connect OpenBackup to their own
+          server over the internet.
+        </p>
+      </section>
+
+      <section>
+        <h2>10. Children's privacy</h2>
+
+        <p>
+          OpenBackup is not specifically directed at children and does not
+          knowingly collect personal information from children.
+        </p>
+      </section>
+
+      <section>
+        <h2>11. Changes to this Privacy Policy</h2>
+
+        <p>
+          This Privacy Policy may be updated when OpenBackup's functionality,
+          legal requirements or third-party integrations change.
+        </p>
+
+        <p>
+          The latest version will remain available on this page.
+        </p>
+      </section>
+
+      <section>
+        <h2>12. Contact</h2>
+
+        <p>
+          Questions about this Privacy Policy can be sent to:
+        </p>
+
+        <p>
+          <strong>OpenBackup</strong><br>
+          Email:
+          <a href="mailto:support@openbackup.app">
+            support@openbackup.app
+          </a><br>
+          Website:
+          <a href="https://openbackup.app">
+            openbackup.app
+          </a>
+        </p>
+      </section>
+
+      <section>
+        <h2>13. Disclaimer and trademarks</h2>
+
+        <p>
+          OpenBackup is an independent backup monitoring application.
+        </p>
+
+        <p>
+          OpenBackup is not affiliated with, endorsed by, sponsored by or
+          officially connected with SuperDuper!, Shirt Pocket, Google,
+          Dropbox, Apple, Microsoft or any other backup-software or
+          cloud-storage provider.
+        </p>
+
+        <p>
+          All product names, trademarks and registered trademarks are the
+          property of their respective owners.
+        </p>
+      </section>
+
+    </article>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>OpenBackup</strong><br>
+        <small>Backup monitoring for SuperDuper! on macOS.</small>
+      </div>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/#installation">Installation</a>
+        <a href="/setup/">Setup guide</a>
+        <a href="/privacy.html" aria-current="page">Privacy policy</a>
+        <a href="mailto:support@openbackup.app">Support</a>
+      </nav>
+    </div>
+    <div class="container" style="margin-top: 22px">
+      <small>© 2026 Mark Toby. OpenBackup is an independent product and is not affiliated with SuperDuper! or its developer.</small>
+    </div>
+  </footer>
+</body>
+</html>
