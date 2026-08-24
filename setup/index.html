@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>OpenBackup Setup Guide</title>
+<meta content="Install OpenBackup Setup on macOS, connect BackupMonitor.sh to SuperDuper!, synchronize backup_status.json, and connect the OpenBackup Android app." name="description"/>
+<link href="https://openbackup.app/setup/" rel="canonical"/>
+<meta content="#100d22" name="theme-color"/>
+<style>
+    :root {
+      color-scheme: dark;
+      --background: #080713;
+      --surface: #121025;
+      --surface-light: #1b1731;
+      --border: rgba(255, 255, 255, 0.11);
+      --text: #f8f7ff;
+      --muted: #aaa7b7;
+      --pink: #ff47c7;
+      --cyan: #26e2d5;
+      --orange: #ffb454;
+      --green: #38e0ae;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 8% 5%, rgba(38, 226, 213, 0.12), transparent 28rem),
+        radial-gradient(circle at 90% 8%, rgba(255, 71, 199, 0.13), transparent 30rem),
+        linear-gradient(145deg, #070711, #0e0a1c 55%, #080713);
+      color: var(--text);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--cyan);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: var(--pink);
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -5rem;
+      left: 1rem;
+      z-index: 100;
+      padding: 0.7rem 1rem;
+      border-radius: 0.6rem;
+      background: var(--pink);
+      color: #130b17;
+      font-weight: 800;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 7, 19, 0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 0.85rem 0;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text { font-size: 1.18rem; letter-spacing: -.03em; }
+    .brand-text .brand-backup {
+      background: linear-gradient(90deg, #08a8ff 5%, #8156ff 54%, #d33dff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 16px rgba(129,86,255,.18);
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 2.15rem;
+      height: 2.15rem;
+      place-items: center;
+      border-radius: 0.7rem;
+      box-shadow: 0 8px 28px rgba(255, 71, 199, 0.25);
+      overflow: hidden;
+    }
+
+    .brand-mark img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.5rem;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .header-link:hover {
+      border-color: rgba(255, 71, 199, 0.5);
+      background: rgba(255, 71, 199, 0.08);
+    }
+
+    .language-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .language-switcher button {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font-size: .96rem;
+      line-height: 1;
+    }
+
+    .language-switcher button:hover,
+    .language-switcher button:focus-visible,
+    .language-switcher button[aria-pressed="true"] {
+      outline: none;
+      background: rgba(255,255,255,.13);
+      box-shadow: 0 0 0 1px rgba(38,226,213,.42);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 4.5rem 0 5rem;
+    }
+
+    .hero {
+      max-width: 850px;
+      padding: 2rem 0 3.5rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 0.38rem 0.75rem;
+      border: 1px solid rgba(255, 71, 199, 0.32);
+      border-radius: 999px;
+      background: rgba(255, 71, 199, 0.08);
+      color: var(--pink);
+      font-size: 0.8rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 1.2rem 0 1rem;
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+    }
+
+    h3 {
+      margin: 0 0 0.65rem;
+      font-size: 1.17rem;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+    }
+
+    .quick-nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin: 2rem 0 4rem;
+    }
+
+    .quick-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 4rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 750;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .quick-nav a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(38, 226, 213, 0.38);
+      background: rgba(38, 226, 213, 0.06);
+    }
+
+    .quick-number {
+      display: grid;
+      width: 1.85rem;
+      height: 1.85rem;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(38, 226, 213, 0.12);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 17rem;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .side-nav {
+      position: sticky;
+      top: 5.4rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: rgba(18, 16, 37, 0.8);
+    }
+
+    .side-nav strong {
+      display: block;
+      margin: 0 0 0.55rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .side-nav a {
+      display: block;
+      padding: 0.48rem 0.6rem;
+      border-radius: 0.55rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .side-nav a:hover {
+      background: rgba(255, 71, 199, 0.09);
+      color: var(--pink);
+    }
+
+    .section {
+      scroll-margin-top: 6rem;
+      margin: 0 0 2rem;
+      padding: clamp(1.3rem, 3vw, 2rem);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .section > p:first-of-type {
+      color: var(--muted);
+    }
+
+    .step-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .step-number {
+      display: grid;
+      width: 2.5rem;
+      height: 2.5rem;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 0.8rem;
+      background: linear-gradient(135deg, var(--pink), #9f54ff);
+      color: #fff;
+      font-weight: 950;
+      box-shadow: 0 8px 24px rgba(255, 71, 199, 0.2);
+    }
+
+    ol,
+    ul {
+      padding-left: 1.35rem;
+    }
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+
+    .notice {
+      margin: 1.2rem 0;
+      padding: 1rem 1.1rem;
+      border-left: 3px solid var(--cyan);
+      border-radius: 0.2rem 0.85rem 0.85rem 0.2rem;
+      background: rgba(38, 226, 213, 0.07);
+    }
+
+    .notice.warning {
+      border-left-color: var(--orange);
+      background: rgba(255, 180, 84, 0.08);
+    }
+
+    .notice.success {
+      border-left-color: var(--green);
+      background: rgba(56, 224, 174, 0.07);
+    }
+
+    .notice strong {
+      color: var(--text);
+    }
+
+    code {
+      padding: 0.1rem 0.35rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.35rem;
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--cyan);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    pre code {
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .file-tree {
+      color: var(--text);
+    }
+
+    .checklist {
+      display: grid;
+      gap: 0.65rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 1.65rem;
+    }
+
+    .checklist li::before {
+      position: absolute;
+      top: 0.05rem;
+      left: 0;
+      color: var(--green);
+      content: "✓";
+      font-weight: 950;
+    }
+
+    .footer {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer p {
+      margin: 0.25rem 0;
+    }
+
+    @media (max-width: 850px) {
+      .quick-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      main {
+        padding-top: 2.5rem;
+      }
+
+      .header-link {
+        padding-inline: 0.7rem;
+        font-size: 0.8rem;
+      }
+
+      .brand-text {
+        font-size: 1rem;
+      }
+
+      .language-switcher button { width: 24px; height: 24px; font-size: .82rem; }
+
+      .section {
+        border-radius: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+<style>.language-switcher [data-language]{transition:transform .2s ease,font-size .2s ease}.language-switcher [data-language].active-language{transform:scale(1.28);font-size:1.25rem;background:rgba(255,255,255,.16);box-shadow:0 0 0 2px rgba(38,226,213,.65)}</style></head>
+<body>
+<a class="skip-link" data-i18n="setup.0" href="#main-content">Skip to setup guide</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="https://openbackup.app/">
+<span class="brand-mark">
+<img alt="OpenBackup logo" src="/assets/images/OpenBackup-logo-transparant.png"/>
+</span>
+<span class="brand-text">Open<span class="brand-backup" data-i18n="setup.1">Backup</span></span>
+</a>
+<div aria-label="Choose language" class="language-switcher">
+<button aria-label="English" aria-pressed="true" data-i18n="setup.2" data-language="en" type="button">🇬🇧</button>
+<button aria-label="Nederlands" aria-pressed="false" data-i18n="setup.3" data-language="nl" type="button">🇳🇱</button>
+<button aria-label="Deutsch" aria-pressed="false" data-i18n="setup.4" data-language="de" type="button">🇩🇪</button>
+<button aria-label="Español" aria-pressed="false" data-i18n="setup.5" data-language="es" type="button">🇪🇸</button>
+<button aria-label="Français" aria-pressed="false" data-i18n="setup.6" data-language="fr" type="button">🇫🇷</button>
+</div>
+<a class="header-link" data-i18n="setup.7" href="https://openbackup.app/">Back to openbackup.app</a>
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="page-title" class="hero">
+<span class="eyebrow" data-i18n="setup.8">macOS setup guide</span>
+<h1 data-i18n="setup.9" id="page-title">Connect your SuperDuper! backups to OpenBackup</h1>
+<p data-i18n="setup.10">
+        Install the OpenBackup monitor on your Mac, connect it to SuperDuper!,
+        synchronize the generated status file, and view your backup status on Android.
+      </p>
+</section>
+<nav aria-label="Setup overview" class="quick-nav">
+<a href="#install">
+<span class="quick-number" data-i18n="setup.11">1</span>
+<span data-i18n="setup.12">Install OpenBackup</span>
+</a>
+<a href="#superduper">
+<span class="quick-number" data-i18n="setup.13">2</span>
+<span data-i18n="setup.14">Connect SuperDuper!</span>
+</a>
+<a href="#android">
+<span class="quick-number" data-i18n="setup.15">3</span>
+<span data-i18n="setup.16">Connect Android</span>
+</a>
+</nav>
+<div class="layout">
+<div class="content">
+<section class="section" id="before-you-start">
+<h2 data-i18n="setup.17">Before you start</h2>
+<p data-i18n="setup.18">You need:</p>
+<ul class="checklist">
+<li data-i18n="setup.19">A Mac running macOS</li>
+<li data-i18n="setup.20">SuperDuper! installed and configured</li>
+<li data-i18n="setup.21">The OpenBackup Setup wizard</li>
+<li data-i18n="setup.22">Google Drive, Dropbox, or another supported HTTPS location</li>
+<li data-i18n="setup.23">The OpenBackup app on an Android device</li>
+</ul>
+<div class="notice">
+<strong data-i18n="setup.24">Privacy:</strong>
+            OpenBackup does not upload or inspect your backup contents. It only uses a
+            small JSON status file created after SuperDuper! completes a backup.
+          </div>
+</section>
+<section class="section" id="install">
+<div class="step-heading">
+<span class="step-number" data-i18n="setup.25">1</span>
+<div>
+<h2 data-i18n="setup.26">Install OpenBackup on your Mac</h2>
+<p data-i18n="setup.27">Open the OpenBackup Setup wizard and continue to the Install step.</p>
+</div>
+</div>
+<ol>
+<li data-i18n="setup.28">Open the OpenBackup Setup wizard and continue to the Install step.</li>
+<li data-i18n="setup.29">Select your installation location.</li>
+<li data-i18n="setup.30">
+              Keep the default location unless you have a specific reason to change it:
+              <code>~/OpenBackup</code>.
+            </li>
+<li>Select <strong data-i18n="setup.31">Install OpenBackup</strong>.</li>
+<li data-i18n="setup.32">
+              Enter an administrator password when macOS asks for authorization.
+            </li>
+</ol>
+<div class="notice warning">
+<strong data-i18n="setup.33">Why is an administrator password required?</strong>
+            SuperDuper! requires the monitor script to be owned by
+            <code>root:wheel</code>. macOS handles the password prompt. OpenBackup
+            cannot see or store your password.
+          </div>
+<p data-i18n="setup.34">After installation, the selected folder contains:</p>
+<pre class="file-tree"><code>OpenBackup/
+├── BackupMonitor.sh
+├── backup_status.json
+└── logs/
+    └── BackupMonitor.log</code></pre>
+<p data-i18n="setup.35">
+            The initial <code>backup_status.json</code> contains clearly named demo
+            data, allowing you to test the Android app before running a full backup.
+            Your first real SuperDuper! run updates the file with actual backup status.
+          </p>
+</section>
+<section class="section" id="superduper">
+<div class="step-heading">
+<span class="step-number" data-i18n="setup.36">2</span>
+<div>
+<h2 data-i18n="setup.37">Connect the script to SuperDuper!</h2>
+<p data-i18n="setup.38">Configure SuperDuper! to run the monitor after a copy completes.</p>
+</div>
+</div>
+<ol>
+<li data-i18n="setup.39">Open SuperDuper! and select the backup you want to monitor.</li>
+<li>Open <strong data-i18n="setup.40">Options</strong>, followed by <strong data-i18n="setup.41">Advanced</strong>.</li>
+<li>
+              Under <strong data-i18n="setup.42">After copy</strong>, enable
+              <strong data-i18n="setup.43">Run shell script after copy completes</strong>.
+            </li>
+<li data-i18n="setup.44">
+              Select <code>BackupMonitor.sh</code> from your chosen OpenBackup folder.
+            </li>
+<li data-i18n="setup.45">Save the SuperDuper! settings.</li>
+</ol>
+<div class="notice success">
+            The script is installed with owner <code>root:wheel</code> and permissions
+            <code>755</code>, as required by SuperDuper!.
+          </div>
+</section>
+<section class="section" id="test-backup">
+<div class="step-heading">
+<span class="step-number" data-i18n="setup.46">3</span>
+<div>
+<h2 data-i18n="setup.47">Run a test backup</h2>
+<p data-i18n="setup.48">Confirm that SuperDuper! starts the monitor correctly.</p>
+</div>
+</div>
+<ol>
+<li data-i18n="setup.49">Run the configured SuperDuper! backup.</li>
+<li data-i18n="setup.50">Wait until the copy completes.</li>
+<li data-i18n="setup.51">Open your OpenBackup folder in Finder.</li>
+<li data-i18n="setup.52">Confirm that <code>backup_status.json</code> has been updated.</li>
+<li data-i18n="setup.53">
+              If needed, inspect <code>logs/BackupMonitor.log</code> for details.
+            </li>
+</ol>
+<p data-i18n="setup.54">
+            OpenBackup supports multiple backup jobs. Each job appears as a separate
+            entry inside the <code>backups</code> array in the JSON file.
+          </p>
+</section>
+<section class="section" id="synchronize">
+<div class="step-heading">
+<span class="step-number" data-i18n="setup.55">4</span>
+<div>
+<h2 data-i18n="setup.56">Synchronize the OpenBackup folder</h2>
+<p data-i18n="setup.57">Make the status file available to your Android device.</p>
+</div>
+</div>
+<ol>
+<li data-i18n="setup.58">
+              Configure Google Drive, Dropbox, or your preferred supported service to
+              synchronize the OpenBackup folder.
+            </li>
+<li data-i18n="setup.59">Wait until <code>backup_status.json</code> has synchronized.</li>
+<li data-i18n="setup.60">Create a read-only share link for <code>backup_status.json</code>.</li>
+<li data-i18n="setup.61">
+              Test the link in a private browser window. It should be accessible without
+              editing permission.
+            </li>
+</ol>
+<div class="notice">
+            Keep the share link read-only. OpenBackup only needs permission to retrieve
+            the status file.
+          </div>
+</section>
+<section class="section" id="android">
+<div class="step-heading">
+<span class="step-number" data-i18n="setup.62">5</span>
+<div>
+<h2 data-i18n="setup.63">Connect the Android app</h2>
+<p data-i18n="setup.64">Add the shared status-file link to OpenBackup.</p>
+</div>
+</div>
+<ol>
+<li data-i18n="setup.65">Open OpenBackup on your Android device.</li>
+<li data-i18n="setup.66">Open the connection settings.</li>
+<li data-i18n="setup.67">Select your connection method.</li>
+<li data-i18n="setup.68">Paste the read-only link to <code>backup_status.json</code>.</li>
+<li data-i18n="setup.69">Save the configuration and refresh the backup status.</li>
+</ol>
+<p data-i18n="setup.70">
+            Before your first real backup, the app displays the demo entries created by
+            the setup wizard. After SuperDuper! runs, the file is updated with real
+            source, destination, completion time, result, and free-space information.
+          </p>
+</section>
+<section class="section" id="troubleshooting">
+<h2 data-i18n="setup.71">Troubleshooting</h2>
+<h3 data-i18n="setup.72">SuperDuper! refuses to run the script</h3>
+<p data-i18n="setup.73">
+            Reinstall the script with OpenBackup Setup and approve the administrator
+            prompt. SuperDuper! requires <code>BackupMonitor.sh</code> to be owned by
+            <code>root:wheel</code>.
+          </p>
+<h3 data-i18n="setup.74">The Android app still shows demo data</h3>
+<p data-i18n="setup.75">
+            Confirm that a real backup completed, that <code>backup_status.json</code>
+            was updated on the Mac, and that the cloud copy has finished synchronizing.
+          </p>
+<h3 data-i18n="setup.76">No log file appears</h3>
+<p>
+<code>BackupMonitor.log</code> is written when the monitor script runs.
+            Confirm that the script is selected under SuperDuper!'s
+            <strong data-i18n="setup.77">After copy</strong> setting.
+          </p>
+<h3 data-i18n="setup.78">The status link does not work</h3>
+<p data-i18n="setup.79">
+            Test the link in a private browser window. Check that the file is shared
+            read-only and that the link does not require access to your personal cloud
+            account.
+          </p>
+</section>
+</div>
+<nav aria-label="On this page" class="side-nav">
+<strong data-i18n="setup.80">On this page</strong>
+<a data-i18n="setup.81" href="#before-you-start">Before you start</a>
+<a data-i18n="setup.82" href="#install">Install OpenBackup</a>
+<a data-i18n="setup.83" href="#superduper">Connect SuperDuper!</a>
+<a data-i18n="setup.84" href="#test-backup">Run a test backup</a>
+<a data-i18n="setup.85" href="#synchronize">Synchronize</a>
+<a data-i18n="setup.86" href="#android">Connect Android</a>
+<a data-i18n="setup.87" href="#troubleshooting">Troubleshooting</a>
+</nav>
+</div>
+</main>
+<footer class="footer">
+<p><strong data-i18n="setup.88">OpenBackup</strong> — Reliable backup monitoring for SuperDuper! on macOS.</p>
+<p data-i18n="setup.89">
+      OpenBackup is an independent project and is not affiliated with, endorsed by,
+      or sponsored by Shirt Pocket.
+    </p>
+</footer>
+<script>
+  </script>
+<script defer="True" src="/assets/js/translations.js"></script></body>
+</html>
