@@ -1,0 +1,28 @@
+{
+  "backups": [
+    {
+      "id": "system",
+      "name": "SuperDuper Audio Backup",
+      "status": "SUCCESS",
+      "completedAt": "2026-08-29T19:44:24+0200",
+      "source": "Macintosh HD",
+      "sourcePath": "/",
+      "destination": "Drop_System_SSD",
+      "destinationPath": "/Volumes/Ext_System_Drive",
+      "copyScript": "/Volumes/SSD/Gebruikers/user/Library/Application Support/SuperDuper!/Copy Scripts/Standard Scripts/Backup - all files.dset",
+      "freeSpace": "72Gi"
+    },
+    {
+      "id": "data",
+      "name": "SuperDuper Pictures Backup",
+      "status": "SUCCESS",
+      "completedAt": "2026-08-29T10:53:44+0200",
+      "source": "SSD Drive",
+      "sourcePath": "/Volumes/SSD",
+      "destination": "Data_SSD",
+      "destinationPath": "/Volumes/NAS_Data_SSD",
+      "copyScript": "/Volumes/SSD/Gebruikers/user/Library/Application Support/SuperDuper!/Copy Scripts/Standard Scripts/Backup - all files.dset",
+      "freeSpace": "2.3Ti"
+    }
+  ]
+}
