@@ -1,6 +1,6 @@
 {
-  "version": "2.2",
-  "build": 3,
-  "downloadURL": "https://openbackup.app/",
-  "releaseNotes": "OpenBackup Setup 2.2 (Build 3)."
+  "version": "2.3",
+  "build": 19,
+  "downloadURL": "https://openbackup.app/downloads/OpenBackup%20Setup%20for%20macOS%20v2.3.pkg",
+  "releaseNotes": "OpenBackup Setup 2.3 is available."
 }
