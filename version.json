@@ -1,6 +1,6 @@
 {
-  "version": "2.3",
-  "build": 21,
+  "version": "2.4",
+  "build": 23,
   "downloadURL": "https://openbackup.app/downloads/OpenBackup.pkg",
-  "releaseNotes": "OpenBackup Setup 2.3 is available."
+  "releaseNotes": "OpenBackup Setup 2.4 is available."
 }
